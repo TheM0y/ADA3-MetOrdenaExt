@@ -37,7 +37,7 @@ def mezcla_equilibrada(lista):
 
     return resultado
 
-print("\nMEZCLA EQUILIBRADA (sin archivos)")
+print("\nMezcla Equilibrada")
 n = int(input("¿Cuántos datos desea introducir? "))
 datos = [input(f"Dato {i+1}: ") for i in range(n)]
 
