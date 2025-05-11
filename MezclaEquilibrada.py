@@ -1,62 +1,46 @@
-import os
+def mezcla_equilibrada(lista):
+    print("\nDividiendo la lista en dos partes...")
+    mitad = len(lista) // 2
+    izquierda = lista[:mitad]
+    derecha = lista[mitad:]
 
-def dividir_archivo(nombre, archivo1, archivo2):
-    with open(nombre, 'r', encoding='utf-8') as archivo:
-        datos = archivo.read().split()
-        mitad = len(datos) // 2
-        with open(archivo1, 'w', encoding='utf-8') as a1, open(archivo2, 'w', encoding='utf-8') as a2:
-            a1.write(' '.join(datos[:mitad]))
-            a2.write(' '.join(datos[mitad:]))
-    print(f"\nArchivo '{nombre}' dividido en '{archivo1}' y '{archivo2}'.")
+    print("Parte izquierda:", izquierda)
+    print("Parte derecha:", derecha)
 
-def leer_archivo(nombre):
-    with open(nombre, 'r', encoding='utf-8') as archivo:
-        return archivo.read().split()
+    izquierda.sort()
+    derecha.sort()
 
-def escribir_archivo(nombre, datos):
-    with open(nombre, 'w', encoding='utf-8') as archivo:
-        archivo.write(' '.join(datos))
+    print("Izquierda ordenada:", izquierda)
+    print("Derecha ordenada:", derecha)
 
-print("\nMEZCLA EQUILIBRADA (simulada con archivos)")
+    resultado = []
+    i = j = 0
+    print("\nProceso de mezcla equilibrada:")
+    while i < len(izquierda) and j < len(derecha):
+        if izquierda[i] < derecha[j]:
+            resultado.append(izquierda[i])
+            print(f"Agrega {izquierda[i]} de izquierda → {resultado}")
+            i += 1
+        else:
+            resultado.append(derecha[j])
+            print(f"Agrega {derecha[j]} de derecha → {resultado}")
+            j += 1
+
+    while i < len(izquierda):
+        resultado.append(izquierda[i])
+        print(f"Agrega {izquierda[i]} restante de izquierda → {resultado}")
+        i += 1
+    while j < len(derecha):
+        resultado.append(derecha[j])
+        print(f"Agrega {derecha[j]} restante de derecha → {resultado}")
+        j += 1
+
+    return resultado
+
+print("\nMEZCLA EQUILIBRADA (sin archivos)")
 n = int(input("¿Cuántos datos desea introducir? "))
 datos = [input(f"Dato {i+1}: ") for i in range(n)]
-escribir_archivo("original.txt", datos)
 
-print("\nDatos originales escritos en 'original.txt':", datos)
-
-# Dividir y ordenar
-dividir_archivo("original.txt", "a.txt", "b.txt")
-a = sorted(leer_archivo("a.txt"))
-b = sorted(leer_archivo("b.txt"))
-
-print("\nLista A ordenada:", a)
-print("Lista B ordenada:", b)
-
-# Mezclar
-resultado = []
-i = j = 0
-print("\nProceso de mezcla:")
-while i < len(a) and j < len(b):
-    if a[i] < b[j]:
-        resultado.append(a[i])
-        print(f"Agrega {a[i]} de A → {resultado}")
-        i += 1
-    else:
-        resultado.append(b[j])
-        print(f"Agrega {b[j]} de B → {resultado}")
-        j += 1
-while i < len(a):
-    resultado.append(a[i])
-    print(f"Agrega {a[i]} restante de A → {resultado}")
-    i += 1
-while j < len(b):
-    resultado.append(b[j])
-    print(f"Agrega {b[j]} restante de B → {resultado}")
-    j += 1
-
+print("\nLista original:", datos)
+resultado = mezcla_equilibrada(datos)
 print("\nLista ordenada final:", resultado)
-
-# Limpiar archivos
-for archivo in ["original.txt", "a.txt", "b.txt"]:
-    if os.path.exists(archivo):
-        os.remove(archivo)
